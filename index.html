@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GiftLab — Telegram Gifts Simulator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">★</div>
+        <div>
+          <strong>GiftLab</strong>
+          <span>virtual gifts lab</span>
+        </div>
+      </div>
+
+      <nav id="nav">
+        <button class="nav-btn active" data-page="home">⌂ <span>Главная</span></button>
+        <button class="nav-btn" data-page="market">◈ <span>Маркет</span></button>
+        <button class="nav-btn" data-page="cases">▣ <span>Кейсы</span></button>
+        <button class="nav-btn" data-page="upgrade">↗ <span>Апгрейд</span></button>
+        <button class="nav-btn" data-page="battles">⚔ <span>Баттлы</span></button>
+        <button class="nav-btn" data-page="pass">✦ <span>Battle Pass</span></button>
+        <button class="nav-btn" data-page="inventory">▤ <span>Инвентарь</span></button>
+        <button class="nav-btn" data-page="rewards">◴ <span>Награды</span></button>
+        <button class="nav-btn" data-page="promo">% <span>Промокоды</span></button>
+      </nav>
+
+      <div class="side-bottom">
+        <div class="mode-card">
+          <div>
+            <small>Режим</small>
+            <b id="modeLabel">Обычный</b>
+          </div>
+          <label class="switch">
+            <input id="sandboxToggle" type="checkbox">
+            <span></span>
+          </label>
+        </div>
+        <p class="tiny">В Sandbox ⭐ бесконечны. Прогресс Sandbox не попадает в обычную статистику.</p>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">TELEGRAM GIFTS • VIRTUAL ONLY</div>
+          <h1 id="pageTitle">Главная</h1>
+        </div>
+        <div class="top-actions">
+          <div class="sync-pill" id="syncStatus"><i></i> Local mode</div>
+          <div class="balance">
+            <span>★</span>
+            <b id="balanceText">5 000</b>
+          </div>
+          <div class="level-pill">LVL <b id="levelText">1</b></div>
+        </div>
+      </header>
+
+      <section id="page-home" class="page active">
+        <div class="hero">
+          <div>
+            <span class="pill">VIRTUAL ECONOMY</span>
+            <h2>Открывай, улучшай и собирай<br><em>Telegram Gifts</em></h2>
+            <p>Никаких настоящих платежей. Звёзды и предметы существуют только внутри симулятора.</p>
+            <div class="hero-actions">
+              <button class="primary" data-jump="cases">Открыть кейс</button>
+              <button class="ghost" data-jump="upgrade">Апгрейд NFT</button>
+            </div>
+          </div>
+          <div class="hero-showcase">
+            <div class="orbit orbit-a"></div>
+            <div class="orbit orbit-b"></div>
+            <div class="gift-card giant rarity-legendary">
+              <div class="shine"></div>
+              <div class="gift-emoji">🐸</div>
+              <div class="gift-meta">
+                <small>FEATURED</small>
+                <b>Plush Pepe</b>
+                <span>Animated collectible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><small>Баланс</small><strong id="homeBalance">5 000 ★</strong><span>виртуальные Stars</span></div>
+          <div class="stat-card"><small>Инвентарь</small><strong id="homeItems">0</strong><span>предметов</span></div>
+          <div class="stat-card"><small>Лучший дроп</small><strong id="homeBest">—</strong><span>за всё время</span></div>
+          <div class="stat-card"><small>Battle Pass</small><strong id="homePass">0 XP</strong><span id="homePassSub">уровень 1</span></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>QUICK PLAY</small><h3>Популярные кейсы</h3></div>
+            <button class="link-btn" data-jump="cases">Все кейсы →</button>
+          </div>
+          <div id="homeCases" class="case-grid"></div>
+        </div>
+      </section>
+
+      <section id="page-market" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>VALUE DATABASE</small><h3>Маркет</h3></div>
+            <div class="row">
+              <input id="marketSearch" class="input" placeholder="Поиск подарка..." />
+              <select id="marketSort" class="input">
+                <option value="priceDesc">Цена ↓</option>
+                <option value="priceAsc">Цена ↑</option>
+                <option value="name">Название</option>
+              </select>
+            </div>
+          </div>
+          <div class="notice">Цены в каталоге берутся из Firestore-коллекции <code>market</code>. В демо-пакете числа помечены как <b>DEMO</b>, чтобы не выдавать их за реальные рыночные цены.</div>
+          <div id="marketGrid" class="market-grid"></div>
+        </div>
+      </section>
+
+      <section id="page-cases" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>CASE OPENING</small><h3>Кейсы</h3></div>
+            <span class="muted">Обычный баланс ограничен • Sandbox = ∞</span>
+          </div>
+          <div id="caseGrid" class="case-grid big"></div>
+        </div>
+      </section>
+
+      <section id="page-upgrade" class="page">
+        <div class="upgrade-layout">
+          <div class="panel">
+            <div class="panel-head"><div><small>YOUR ITEM</small><h3>Что улучшаем</h3></div></div>
+            <div id="upgradeFrom" class="select-list"></div>
+          </div>
+          <div class="upgrade-center">
+            <div class="chance-ring" id="chanceRing">
+              <div>
+                <strong id="chanceText">0%</strong>
+                <span>шанс</span>
+              </div>
+            </div>
+            <button id="upgradeBtn" class="primary wide">Выберите 2 предмета</button>
+            <small class="muted">Шанс = стоимость исходного предмета / стоимость цели × 95%</small>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><small>TARGET</small><h3>Цель</h3></div></div>
+            <div id="upgradeTo" class="select-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-battles" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>CASE BATTLES</small><h3>Баттлы</h3></div>
+            <button id="createBattleBtn" class="primary">Быстрый 1v1</button>
+          </div>
+          <div class="battle-banner">
+            <div><b>Как работает:</b> вы и бот открываете одинаковый кейс. Побеждает большая суммарная стоимость дропа.</div>
+            <span>100% виртуально</span>
+          </div>
+          <div id="battleArea" class="battle-area empty">Нажми «Быстрый 1v1»</div>
+        </div>
+      </section>
+
+      <section id="page-pass" class="page">
+        <div class="pass-hero">
+          <div>
+            <span class="pill">SEASON 01</span>
+            <h2>GiftLab Battle Pass</h2>
+            <p>Получай XP за кейсы, апгрейды и баттлы.</p>
+          </div>
+          <div class="prime-card">
+            <span>PRIME</span>
+            <b id="primeStatus">Не активирован</b>
+            <button id="primeBtn" class="primary">Активировать за 2 500 ★</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="progress-row"><span>Прогресс сезона</span><b id="passProgressText">0 / 500 XP</b></div>
+          <div class="progress"><i id="passProgressBar"></i></div>
+          <div id="passTrack" class="pass-track"></div>
+        </div>
+      </section>
+
+      <section id="page-inventory" class="page">
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>COLLECTION</small><h3>Инвентарь</h3></div>
+            <button id="sellAllBtn" class="ghost">Продать всё</button>
+          </div>
+          <div id="inventoryGrid" class="market-grid"></div>
+        </div>
+      </section>
+
+
+      <section id="page-rewards" class="page">
+        <div class="rewards-hero">
+          <div>
+            <span class="pill">FREE REWARDS</span>
+            <h2>Забирай бесплатные награды</h2>
+            <p>Таймер идёт по реальному времени. После получения награды запускается новый отсчёт.</p>
+          </div>
+          <div class="reward-total">
+            <small>Всего получено</small>
+            <b id="rewardClaimedCount">0</b>
+            <span>наград</span>
+          </div>
+        </div>
+
+        <div id="rewardGrid" class="reward-grid"></div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div><small>REWARD RULES</small><h3>Как это работает</h3></div>
+          </div>
+          <div class="notice">
+            Награды полностью виртуальные. В обычном режиме они пополняют ограниченный баланс.
+            В Sandbox баланс бесконечный, но таймеры и получение наград всё равно работают для теста.
+          </div>
+        </div>
+      </section>
+
+      <section id="page-promo" class="page">
+        <div class="promo-layout">
+          <div class="panel">
+            <div class="panel-head"><div><small>REDEEM</small><h3>Промокод</h3></div></div>
+            <div class="promo-box">
+              <input id="promoInput" class="input" placeholder="Введи код" maxlength="32">
+              <button id="promoBtn" class="primary">Активировать</button>
+            </div>
+            <div id="promoResult" class="muted">Каждый код можно использовать один раз.</div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><div><small>DEMO CODES</small><h3>Для теста</h3></div></div>
+            <div class="code-list">
+              <code>WELCOME</code><span>+750 ★</span>
+              <code>PRIMEDEMO</code><span>+1000 XP</span>
+              <code>LUCKYCASE</code><span>+1 бесплатный кейс</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="caseModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose">×</button>
+      <small id="modalCaseTag">CASE</small>
+      <h2 id="modalCaseName">Case</h2>
+      <div class="roulette-wrap">
+        <div class="roulette-marker"></div>
+        <div id="roulette" class="roulette"></div>
+      </div>
+      <div id="dropResult" class="drop-result hidden"></div>
+      <button id="openCaseBtn" class="primary wide">Открыть</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
