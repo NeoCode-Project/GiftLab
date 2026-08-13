@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7f5af0"/><stop offset="1" stop-color="#2cb67d"/></linearGradient><radialGradient id="r"><stop stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+<rect width="520" height="520" rx="54" fill="#101522"/><rect x="18" y="18" width="484" height="484" rx="42" fill="url(#g)" opacity=".22"/>
+<circle cx="260" cy="205" r="144" fill="url(#r)"/><path d="M150 275c0-83 49-151 110-151s110 68 110 151c0 49-21 91-54 118H204c-33-27-54-69-54-118Z" fill="url(#g)" stroke="#ffffff" stroke-opacity=".28" stroke-width="5"/>
+<circle cx="220" cy="230" r="15" fill="#fff" opacity=".9"/><circle cx="300" cy="230" r="15" fill="#fff" opacity=".9"/><path d="M220 298c26 24 54 24 80 0" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+<rect x="74" y="405" width="372" height="72" rx="21" fill="#080b12" fill-opacity=".78"/><text x="260" y="438" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="25" font-weight="700">Swiss Watch</text><text x="260" y="463" text-anchor="middle" fill="#d4d8e5" font-family="Arial,sans-serif" font-size="15">TELEGRAM GIFT · 020</text>
+<circle cx="426" cy="76" r="38" fill="#0a0e17" fill-opacity=".8"/><text x="426" y="86" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="27" font-weight="800">SW</text></svg>
